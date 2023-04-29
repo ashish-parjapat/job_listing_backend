@@ -16,15 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 app.get("/", async (req, res) => {
   try {
-    const jobPosition = req.query.jobPosition || "";
     const skill = req.query.skill || "";
-    if (jobPosition) {
-      const regex = new RegExp(jobPosition, "i");
-      const AddJobs = await AddJob.find({
-        jobPosition: { $regex: regex },
-      });
-      res.status(201).json(AddJobs);
-    } else if (skill) {
+    if (skill) {
       const AddJobs = await AddJob.find({
         "skill.value": {
           $all: skill,
