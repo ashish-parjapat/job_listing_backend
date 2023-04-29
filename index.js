@@ -2,6 +2,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 const app = express();
+require("dotenv").config();
+
 app.use(express.json({ limit: "50mb" }));
 var cors = require("cors");
 app.use(cors());
@@ -54,9 +56,13 @@ app.post("/register", async (req, res) => {
         password: encryptedPassword,
       });
 
-      const token = jwt.sign({ user_id: user._id, email }, "Junaid0786", {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(
+        { user_id: user._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
       user.token = token;
 
       res.status(201).json(user);
@@ -79,9 +85,13 @@ app.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ user_id: user._id, email }, "Junaid0786", {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(
+        { user_id: user._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
 
       user.token = token;
 
@@ -109,6 +119,18 @@ app.post("/procted", verifyToken, async (req, res) => {
       aboutCompany,
       skill,
     } = req.body;
+    // console.log(companyName);
+    // console.log(companyLogo);
+    // console.log(jobPosition);
+    // console.log(jobDuration);
+    // console.log(jobVacancy);
+    // console.log(monthlySalary);
+    // console.log(jobType);
+    // console.log(workPlace);
+    // console.log(location);
+    // console.log(jobDescription);
+    // console.log(aboutCompany);
+    // console.log(skill);
     const oldSameJob = await AddJob.findOne({ jobDescription });
     if (
       (companyName && companyLogo && jobPosition && jobDuration && jobVacancy,
