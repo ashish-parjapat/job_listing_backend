@@ -112,18 +112,7 @@ app.post("/procted", verifyToken, async (req, res) => {
       aboutCompany,
       skill,
     } = req.body;
-    // console.log(companyName);
-    // console.log(companyLogo);
-    // console.log(jobPosition);
-    // console.log(jobDuration);
-    // console.log(jobVacancy);
-    // console.log(monthlySalary);
-    // console.log(jobType);
-    // console.log(workPlace);
-    // console.log(location);
-    // console.log(jobDescription);
-    // console.log(aboutCompany);
-    // console.log(skill);
+ 
     const oldSameJob = await AddJob.findOne({ jobDescription });
     if (
       (companyName && companyLogo && jobPosition && jobDuration && jobVacancy,
@@ -184,6 +173,7 @@ app.post("/edit/:id", async (req, res) => {
     AddJobss.jobPosition = req.body.jobPosition;
     AddJobss.jobDuration = req.body.jobDuration;
     AddJobss.monthlySalary = req.body.monthlySalary;
+    AddJobss.jobVacancy = req.body.jobVacancy;
     AddJobss.jobType = req.body.jobType;
     AddJobss.workPlace = req.body.workPlace;
     AddJobss.location = req.body.location;
